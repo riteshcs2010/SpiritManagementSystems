@@ -218,6 +218,9 @@ Public Class frmMainMenu
                 cmd.Parameters.AddWithValue("@d1", GlobalCompanygroupID)
                 cmd.Parameters.AddWithValue("@d2", GlobalCompanyID)
             End If
+            If lblUserType.Text = "Admin" Then
+                cmd = New SqlCommand("SELECT RTRIM(Product.ProductCode),RTRIM(ProductName),RTRIM(Temp_Stock.Barcode),CostPrice,SellingPrice,Discount,VAT,RTRIM(Convert(nvarchar(50),Qty) + ' ' + Convert(Nvarchar(50),SalesUnit)) FROM UnitMaster INNER JOIN Product ON UnitMaster.Unit = Product.SalesUnit INNER JOIN Temp_Stock ON Product.PID = Temp_Stock.ProductID and qty > 0  order by Productcode", con)
+            End If
             rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection)
             DataGridView1.Rows.Clear()
             While (rdr.Read() = True)
